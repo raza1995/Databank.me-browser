@@ -1,0 +1,7 @@
+appId: com.mysearch.myapp
+productName: mysearch
+artifactName: myapp-setup-${version}.${ext}
+directories:
+  output: dist
+win:
+  target: nsis

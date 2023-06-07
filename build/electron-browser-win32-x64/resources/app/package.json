@@ -1,0 +1,52 @@
+{
+  "name": "electron-browser",
+  "version": "1.0.0",
+  "description": "A minimal browser shell built on Electron.",
+  "private": true,
+  "main": "packages/shell/index.js",
+  "workspaces": [
+    "packages/shell",
+    "packages/electron-chrome-extensions",
+    "packages/electron-chrome-context-menu"
+  ],
+  
+  "scripts": {
+    "build": "yarn run build:context-menu && yarn run build:extensions && yarn run build:shell",
+    "build:context-menu": "yarn --cwd ./packages/electron-chrome-context-menu build",
+    "build:extensions": "yarn --cwd ./packages/electron-chrome-extensions build",
+    "build:shell": "yarn --cwd ./packages/shell build",
+    "start": "yarn build && yarn --cwd ./packages/shell start",
+    "start:debug": "cross-env SHELL_DEBUG=true DEBUG='electron-chrome-extensions*' yarn start",
+    "test": "yarn test:extensions && yarn test:shell",
+    "test:extensions": "yarn --cwd ./packages/electron-chrome-extensions test",
+    "test:shell": "yarn --cwd ./packages/shell test",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "build:win64": "electron-packager . --overwrite --platform=win32 --arch=x64 --prune=true --electron-version=23.1.0 --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=Electron-App --asar --version-string.ProductName=\"Databank\"",
+    "build:win": "electron-packager . --platform=win32 --arch=x64 --icon=./path/to/icon.ico --electron-version=23.1.0 --prune=true --overwrite --out=./build"
+  },
+  "license": "GPL-3.0",
+  "author": "Raza <raza@>",
+  "dependencies": {
+    "axios": "^1.3.2",
+    "electron-chrome-context-menu": "file:packages/electron-chrome-context-menu",
+    "electron-chrome-extensions": "^3.10.0",
+    "electron-debug": "^3.2.0",
+    "electron-store": "^8.1.0",
+    "fetch": "^1.1.0",
+    "jquery": "^3.6.3",
+    "node-fetch": "^3.3.0"
+  },
+  "repository": "",
+  "prettier": {
+    "printWidth": 100,
+    "singleQuote": true,
+    "jsonEnable": false,
+    "semi": false,
+    "endOfLine": "lf"
+  },
+  "devDependencies": {
+    "electron-builder": "^23.6.0",
+    "electron-packager": "^17.1.1"
+  }
+}
