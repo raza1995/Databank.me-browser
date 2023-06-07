@@ -22,7 +22,7 @@
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
     "build:win64": "electron-packager . --overwrite --platform=darwin --arch=x64 --prune=true --icon=./packages/DatabankLogoTransparent.ico --electron-version=23.1.0 --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=Electron-App --version-string.ProductName=\"Databank\"",
-    "build:win": "electron-packager . --platform=win32 --arch=x64 --icon=./path/to/icon.ico --electron-version=23.1.0 --prune=true --overwrite --out=./build",
+    "build:win": "electron-packager . --platform=win32 --arch=x64 --icon=./path/to/icon.ico --electron-version=23.1.0 --prune=true --overwrite --out=./build"
 
   },
   "license": "GPL-3.0",
