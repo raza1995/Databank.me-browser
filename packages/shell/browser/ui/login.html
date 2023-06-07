@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+      }
+
+      form {
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        padding: 20px;
+        margin: 0 auto;
+        max-width: 600px;
+        margin-top: 50px;
+      }
+
+
+      h1 {
+        text-align: center; 
+      }
+
+      label {
+        display: block;
+        font-size: 16px;
+        margin-bottom: 5px;
+      }
+
+      input[type="text"],
+      input[type="password"] {
+       width: 96%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+        margin-bottom: 20px;
+      }
+
+      button[type="submit"] {
+        background-color: #0078d4;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 10px;
+      }
+
+      button[type="submit"]:hover {
+        background-color: #005a9e;
+      }
+
+      .error {
+        color: red;
+        margin-top: 10px;
+      }
+      .container {
+  width: 100%;
+  max-width: 600px; /* adjust this value as desired */
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+img {
+ max-width: 20%;
+  height: auto;
+  display: block;
+  margin: 0 auto 20px;
+}
+
+form {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  margin-top: 20px;
+}
+    </style>
+  </head>
+  <body>
+   <div class="container">
+    <img src="../../databan.png" alt="">
+    <form id="login">
+      <h1>Login</h1>
+      <label for="email">
+        Email
+      </label>
+      <input type="text" name="email" id="email" value="">
+      <label for="password">
+        Password
+      </label>
+      <input type="password" name="password" id="password" value="">
+      <button type="submit">
+        Login
+      </button>
+      <div id="error" class="error"></div>
+    </form>
+  </div>
+
+    <script>
+
+      const { ipcRenderer } = require("electron")
+      // Authenticate user and create a new session
+      const login = document.getElementById("login")
+
+      login.addEventListener("submit", async (event) => {
+        event.preventDefault()
+        const email = document.getElementById("email").value
+        const password = document.getElementById("password").value
+
+        // Call the authentication API endpoint
+        fetch("https://apiv1.databankme.vercel.app/api/mysearch/login", {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email, password })
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.error) {
+            document.getElementById("error").innerText = data.error;
+          } else {
+            // Save the session token to cookies or local storage
+            if (data.token) {
+              if (window.localStorage) {
+                window.localStorage.setItem("session_token", data.token)
+              } else {
+                document.cookie = `session_token=${data.token}; path=/;`
+              }
+            }
+            ipcRenderer.send("authenticated", data)
+          }
+        })
+        .catch(error => {
+          console.error(error)
+        })
+      })
+    </script>
+  </body>
+</html>

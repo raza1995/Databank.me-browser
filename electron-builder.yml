@@ -1,0 +1,13 @@
+appId: com.example.myapp
+productName: My Search
+directories:
+  output: dist
+publish:
+
+mac:
+  category: your.app.category
+  target: dmg
+  icon: ./packages/DatabankLogoTransparent.ico
+win:
+  target: nsis
+  icon: ./packages/DatabankLogoTransparent.ico
