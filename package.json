@@ -21,7 +21,7 @@
     "test:shell": "yarn --cwd ./packages/shell test",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
-    "build:dmg": "electron-installer-dmg ./release-builds/electron-browser-darwin-x64/electron-browser.app electron-browser --overwrite --icon=./packages/DatabankLogoTransparent.icns --debug --out=./release-builds/",
+    "build:dmg": "electron-installer-dmg ./release-builds/electron-browser-darwin-x64/electron-browser.app Databank.me | MySearch --overwrite --icon=icons.icns --debug --out=./release-builds/",
     "build:win": "electron-packager . --platform=win32 --arch=x64 --icon=./path/to/icon.ico --electron-version=23.1.0 --prune=true --overwrite --out=./build",
     "sign": "electron-osx-sign --entitlements=my-entitlements.plist release-builds/electron-browser-darwin-x64/electron-browser.app",
     "build:mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --prune=true --icon=icons.icns --electron-version=23.1.0 --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=Electron-App --version-string.ProductName=\"Databank\"",
@@ -46,7 +46,8 @@
       "NSPhotoLibraryUsageDescription": "Your app needs access to the photo library"
     },
     "mac": {
-      "target": "dmg"
+      "target": "dmg",
+      "icon": "icons.icns"
     }
   },
   "repository": "",
